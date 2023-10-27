@@ -17,7 +17,7 @@ app.use(cors()) ;
 app.use('/api/auth/student', studentAuth) ;
 app.use('/api/operation/student', studentOperate) ;
 // app.use('/api/auth/admin', adminAuth) ;
-// app.use('/api/operation/admin', adminOperate) ;
+app.use('/api/operation/admin', adminOperate) ;
 
 
 const port = process.env.PORT ;
