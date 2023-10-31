@@ -1,4 +1,5 @@
 const Student = require('../../models/student') ;
+const QRCs = require('../../models/qrCodes') ;
 const asyncHandler = require('express-async-handler') ;
 const jwt = require('jsonwebtoken') ;
 const bcrypt = require('bcrypt') ;
@@ -28,7 +29,10 @@ const studentRegister = asyncHandler( async(req, res)=>{
             branch,
             phone: number,
       }) ;
-      if(newStudent){
+      const newQRholder = await QRCs.create({
+            email,
+      }) ;
+      if(newStudent && newQRholder){
             res.status(200).json({_id: newStudent.id, email: newStudent.email}) ;
       }
       else{
