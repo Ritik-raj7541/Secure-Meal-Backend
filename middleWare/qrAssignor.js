@@ -12,42 +12,13 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber) => {
     const qrcode = await genQRcode(element, validTime);
     //update qr code schema and student schema
     //     console.log(qrcode);
-    let qrCode1 = {
-      code: "",
-    };
-    let qrCode2 = {
-      code: "",
-    };
-    let qrCode3 = {
-      code: "",
-    };
-    let qrCode4 = {
-      code: "",
-    };
-    if (mealNumber === 1) {
-      qrCode1.code = qrcode;
-    }
-    else if(mealNumber === 2){
-      qrCode2.code = qrcode;
-    }
-    else if(mealNumber === 3){
-      qrCode3.code = qrcode;
-    }
-    else{
-      qrCode4.code = qrcode;
-    }
+    
 
     const dt = new Date() ;
     dt.setHours(0, 0, 0, 0);
     const date = await dateFormatter(dt) ;
-    console.log("date- ", date);
-    const newStudentQr = {
-      date: date,
-      qrCode1,
-      qrCode2,
-      qrCode3,
-      qrCode4,
-    };
+//     console.log("date- ", date);
+    
     //     console.log(newStudentQr);
 
     const userEmail = element.email;
@@ -60,13 +31,48 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber) => {
         qruser.studentQr[qruser.studentQr.length - 1].date !== date)
     ) {
       //make
-      console.log("make");
+      if(qruser.studentQr.length){
+            console.log(qruser.studentQr[qruser.studentQr.length - 1].date);
+      }
+
+      let qrCode1 = {
+            code: "",
+          };
+          let qrCode2 = {
+            code: "",
+          };
+          let qrCode3 = {
+            code: "",
+          };
+          let qrCode4 = {
+            code: "",
+          };
+          if (mealNumber === 1) {
+            qrCode1.code = qrcode;
+          }
+          else if(mealNumber === 2){
+            qrCode2.code = qrcode;
+          }
+          else if(mealNumber === 3){
+            qrCode3.code = qrcode;
+          }
+          else{
+            qrCode4.code = qrcode;
+          }
+          const newStudentQr = {
+            date: date,
+            qrCode1,
+            qrCode2,
+            qrCode3,
+            qrCode4,
+          };
+      console.log("make ",mealNumber);
       const updatedStudent = await QRCs.findOneAndUpdate(
         { _id: qruser.id },
         { $push: { studentQr: newStudentQr } },
         { new: true }
       );
-      // console.log(updatedStudent);
+      console.log(updatedStudent);
     } else {
       const studentQrIndex = qruser.studentQr.length - 1;
       const propertyName = 'qrCode'+mealNumber ;
@@ -79,7 +85,7 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber) => {
         },
         { new: true }
       );
-      console.log(updatedStudent);
+      // console.log(updatedStudent);
     }
   }
   return 200;
