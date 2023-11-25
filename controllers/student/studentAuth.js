@@ -9,8 +9,8 @@ const bcrypt = require('bcrypt') ;
 
 const studentRegister = asyncHandler( async(req, res)=>{
       console.log("body-> ",req.body);
-      const {email, password, name, roll, branch, number} = req.body ;
-      if(!email || !password || !name || !roll || !branch || !number){
+      const {email, password, name, roll, branch, number, hostelNumber} = req.body ;
+      if(!email || !password || !name || !roll || !branch || !number || !hostelNumber){
             res.status(400) ;
             throw new Error("All fields are mandatory!! ") ;
       }
@@ -28,9 +28,11 @@ const studentRegister = asyncHandler( async(req, res)=>{
             roll,
             branch,
             phone: number,
+            hostelNumber,
       }) ;
       const newQRholder = await QRCs.create({
             email,
+            hostelNumber,
       }) ;
       if(newStudent && newQRholder){
             res.status(200).json({_id: newStudent.id, email: newStudent.email}) ;

@@ -5,6 +5,10 @@ const qrSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  hostelNumber:{
+    type: Number,
+    required: true,
+  },
   studentQr: [
     {
       date: String,

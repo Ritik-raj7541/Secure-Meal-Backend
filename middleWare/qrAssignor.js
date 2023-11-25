@@ -9,17 +9,14 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber) => {
   const allStudent = await Student.find();
   for (let index = 0; index < allStudent.length; index++) {
     const element = allStudent[index];
+    console.log(element.hostelNumber);
+    //need to generate the qr code for specific hostel student only
+    // if(element.hostelNumber )
     const qrcode = await genQRcode(element, validTime);
-    //update qr code schema and student schema
-    //     console.log(qrcode);
-    
 
     const dt = new Date() ;
     dt.setHours(0, 0, 0, 0);
     const date = await dateFormatter(dt) ;
-//     console.log("date- ", date);
-    
-    //     console.log(newStudentQr);
 
     const userEmail = element.email;
     const qruser = await QRCs.findOne({ email: userEmail });
@@ -66,13 +63,13 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber) => {
             qrCode3,
             qrCode4,
           };
-      console.log("make ",mealNumber);
+      // console.log("make ",mealNumber);
       const updatedStudent = await QRCs.findOneAndUpdate(
         { _id: qruser.id },
         { $push: { studentQr: newStudentQr } },
         { new: true }
       );
-      console.log(updatedStudent);
+      // console.log(updatedStudent);
     } else {
       const studentQrIndex = qruser.studentQr.length - 1;
       const propertyName = 'qrCode'+mealNumber ;

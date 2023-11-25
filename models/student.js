@@ -24,6 +24,10 @@ const studentSchema = mongoose.Schema({
       branch: {
             type: String,
             required: true,
+      },
+      hostelNumber:{
+            type: Number,
+            required: true,
       }
 }) ;
 
