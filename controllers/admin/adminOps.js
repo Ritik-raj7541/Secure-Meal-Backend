@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler");
+
 const { qrAssignor } = require("../../middleWare/qrAssignor");
 const { setSomeValue } = require("../../config/globalVariables");
+
+const meal = require('../../models/meal') ;
 
 // 1. POST
 // Desc -> it set qr code for each student of particular hostel
@@ -69,4 +72,20 @@ const adminCheckqr = asyncHandler(async (req, res) => {
   const { data } = req.body();
 });
 
-module.exports = { adminSetqr };
+//2. POST
+// url -> /api/operation/admin/update-hostel-menu/:email
+const updateMenu = asyncHandler(async (req, res) =>{
+  const email = req.params.email ;
+  const hostel = meal.findOne({email}) ;
+  const menu = req.body ;
+  if(hostel){
+    console.log("not present");
+    res.status(200).json({message:"updated"}) ;
+  }
+  else{
+    console.log(menu);
+    res.status(200).json({message:"created"}) ;
+  }
+}) ;
+
+module.exports = { adminSetqr, adminCheckqr, updateMenu };
