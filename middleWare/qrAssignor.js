@@ -5,13 +5,13 @@ const { genQRcode } = require("../middleWare/qrcodeGenerator");
 const QRCs = require("../models/qrCodes");
 const {dateFormatter} = require('../middleWare/dateFormatter') ;
 
-const qrAssignor = asyncHandler(async (validTime, mealNumber) => {
+const qrAssignor = asyncHandler(async (validTime, mealNumber, hostel) => {
+
   const allStudent = await Student.find();
   for (let index = 0; index < allStudent.length; index++) {
     const element = allStudent[index];
-    console.log(element.hostelNumber);
     //need to generate the qr code for specific hostel student only
-    // if(element.hostelNumber )
+    if(element.hostelNumber !== hostel ) continue ;
     const qrcode = await genQRcode(element, validTime);
 
     const dt = new Date() ;
