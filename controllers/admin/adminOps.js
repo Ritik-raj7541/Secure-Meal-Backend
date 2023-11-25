@@ -3,6 +3,8 @@ const { qrAssignor } = require("../../middleWare/qrAssignor");
 const { setSomeValue } = require("../../config/globalVariables");
 
 // 1. POST
+// Desc -> it set qr code for each student of particular hostel
+// Input -> time of all the meal
 // url -> /api/operation/admin/set-time
 const adminSetqr = asyncHandler(async (req, res) => {
   const {
