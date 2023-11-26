@@ -19,27 +19,10 @@ const mealSchema = mongoose.Schema({
             type: String,
             required: true,
       },
-      Monday: {
-            meal,
-      },
-      Tuesday: {
-            meal,
-      },
-      Wednesday: {
-            meal,
-      },
-      Thrusday: {
-            meal,
-      },
-      Friday: {
-            meal,
-      },
-      Saturday: {
-            meal,
-      },
-      Sunday: {
-            meal,
-      },
+      routine: {
+            type: Array,
+      } 
+      
 }) ;
 
 module.exports = mongoose.model("MealSchema", mealSchema) ;
