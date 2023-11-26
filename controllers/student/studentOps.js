@@ -1,7 +1,11 @@
 const asyncHandler = require("express-async-handler");
-const QRCs = require("../../models/qrCodes");
+
 const { dateFormatter } = require("../../middleWare/dateFormatter");
 const { getSomeValue } = require("../../config/globalVariables");
+
+const QRCs = require("../../models/qrCodes");
+const meal = require("../../models/meal");
+const Student = require("../../models/student");
 
 //0. check port
 // GET - api/operation/student/get-details
@@ -32,12 +36,29 @@ const getQR = asyncHandler(async (req, res) => {
       qrCode4,
     };
     res.status(200).json(result);
-  }
-  else{
+  } else {
     res.status(200).json({ message: "not generated" });
   }
 });
 
 //2. get menu
-// GET - api/operation/student/get-meal-timetable
-module.exports = { check, getQR };
+// GET - api/operation/student/get-meal-timetable/:email
+const getMenu = asyncHandler(async (req, res) => {
+  const email = req.params.email;
+  const student = await Student.findOne({ email });
+  if (student) {
+    const hostelNumber = student.hostelNumber;
+    const timetable = await meal.findOne({ hostelNumber: hostelNumber });
+    if (timetable) {
+      res.status(200).json(timetable.routine);
+    } else {
+      res
+        .status(404)
+        .json({ message: "time table is not present or not generated" });
+    }
+  } else {
+    res.status(401);
+    throw new Error("User is not valid");
+  }
+});
+module.exports = { check, getQR, getMenu };
