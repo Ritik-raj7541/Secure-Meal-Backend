@@ -19,6 +19,9 @@ const mealSchema = mongoose.Schema({
             type: String,
             required: true,
       },
+      hostelNumber :{
+            type: Number,
+      },
       routine: {
             type: Array,
       } 

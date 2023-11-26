@@ -38,4 +38,6 @@ const getQR = asyncHandler(async (req, res) => {
   }
 });
 
+//2. get menu
+// GET - api/operation/student/get-meal-timetable
 module.exports = { check, getQR };

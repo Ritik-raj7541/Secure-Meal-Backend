@@ -90,8 +90,10 @@ const updateMenu = asyncHandler(async (req, res) => {
       throw new Error("some internal error");
     }
   } else {
+    const hostel = Number(email.substring(0, 2));
     const newMeal = await meal.create({
       email,
+      hostelNumber: hostel,
       routine: menu,
     });
     if (newMeal) {
