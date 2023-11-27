@@ -11,8 +11,14 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber, hostel) => {
   for (let index = 0; index < allStudent.length; index++) {
     const element = allStudent[index];
     //need to generate the qr code for specific hostel student only
+    const studentData = {
+      email: element.email,
+      name: element.name,
+      roll: element.roll,
+      hostelNumber: element.hostelNumber
+    } ;
     if(element.hostelNumber !== hostel ) continue ;
-    const qrcode = await genQRcode(element, validTime);
+    const qrcode = await genQRcode(studentData, validTime, mealNumber);
 
     const dt = new Date() ;
     dt.setHours(0, 0, 0, 0);
