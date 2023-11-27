@@ -7,8 +7,9 @@ const bcrypt = require('bcrypt') ;
 // url = /api/auth/admin/register
 
 const adminRegister = asyncHandler( async(req, res)=>{
-      const {email, password, instituteId} = req.body ;
-      if(!email || !password || !instituteId ){
+      const {email, password, name, instituteId, number} = req.body ;
+      console.log(req.body);
+      if(!email || !password || !name || !instituteId || !number){
             res.status(400) ;
             throw new Error("All fields are mandatory!! ") ;
       }
@@ -22,7 +23,9 @@ const adminRegister = asyncHandler( async(req, res)=>{
       const newAdmin = await Admin.create({
             email,
             password: hashPassword,
+            name,
             instituteId,
+            number,
       }) ;
       if(newAdmin){
             res.status(200).json({_id: newAdmin.id, email: newAdmin.email}) ;
