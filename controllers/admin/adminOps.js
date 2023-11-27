@@ -69,9 +69,11 @@ const adminSetqr = asyncHandler(async (req, res) => {
     .json({ message: "Token generation for each student have been initiated" });
 });
 // 1. POST
-// url -> /api/operation/admin/verify-student
+// url -> /api/operation/admin/verify-student/:email
 const adminCheckqr = asyncHandler(async (req, res) => {
-  const { data } = req.body();
+  const data = req.body;
+  console.log(data);
+  res.status(200).json({message:"good"}) ;
 });
 
 //2. POST

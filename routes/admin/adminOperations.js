@@ -3,6 +3,8 @@ const { adminSetqr, adminCheckqr, updateMenu } = require('../../controllers/admi
 const router = express.Router()
 
 router.route('/set-time/:email').post(adminSetqr) ;
+router.route('/verify-student/:email').post(adminCheckqr)
 router.route('/update-hostel-menu/:email').post(updateMenu) ;
+
 
 module.exports = router ;
