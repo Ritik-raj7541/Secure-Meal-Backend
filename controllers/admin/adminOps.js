@@ -45,6 +45,7 @@ const adminSetqr = asyncHandler(async (req, res) => {
       endTime: mealOneE,
     };
     const status = await qrAssignor(validTime, 1, hostel);
+    // console.log(status);
   }
   if (mealTwoS && mealTwoE) {
     const validTime = {

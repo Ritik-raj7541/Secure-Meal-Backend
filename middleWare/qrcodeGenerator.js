@@ -14,6 +14,7 @@ const genQRcode = asyncHandler(async (element, validTime, mealNumber) => {
     date: date,
   };
   const jsonData = JSON.stringify(data);
+  // console.log(jsonData);
   const qrDataUrl = await qrcode.toDataURL(jsonData);
 
   return qrDataUrl;

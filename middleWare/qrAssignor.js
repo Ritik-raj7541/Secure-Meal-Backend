@@ -8,8 +8,9 @@ const {dateFormatter} = require('../middleWare/dateFormatter') ;
 const qrAssignor = asyncHandler(async (validTime, mealNumber, hostel) => {
 
   const allStudent = await Student.find();
+  // console.log(allStudent);
   for (let index = 0; index < allStudent.length; index++) {
-    const element = allStudent[index];
+    const element = await allStudent[index];
     //need to generate the qr code for specific hostel student only
     const studentData = {
       email: element.email,
@@ -17,8 +18,11 @@ const qrAssignor = asyncHandler(async (validTime, mealNumber, hostel) => {
       roll: element.roll,
       hostelNumber: element.hostelNumber
     } ;
+    console.log(element.hostelNumber, hostel);
     if(element.hostelNumber !== hostel ) continue ;
+    // console.log("raj");
     const qrcode = await genQRcode(studentData, validTime, mealNumber);
+    // console.log(qrcode);
 
     const dt = new Date() ;
     dt.setHours(0, 0, 0, 0);
