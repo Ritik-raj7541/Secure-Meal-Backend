@@ -49,22 +49,22 @@ const adminSetqr = asyncHandler(async (req, res) => {
   }
   if (mealTwoS && mealTwoE) {
     const validTime = {
-      startTime: mealOneS,
-      endTime: mealOneE,
+      startTime: mealTwoS,
+      endTime: mealTwoE,
     };
     const status = await qrAssignor(validTime, 2, hostel);
   }
   if (mealThreeS && mealThreeE) {
     const validTime = {
-      startTime: mealOneS,
-      endTime: mealOneE,
+      startTime: mealThreeS,
+      endTime: mealThreeE,
     };
     const status = await qrAssignor(validTime, 3, hostel);
   }
   if (mealFourS && mealFourE) {
     const validTime = {
-      startTime: mealOneS,
-      endTime: mealOneE,
+      startTime: mealFourS,
+      endTime: mealFourE,
     };
     const status = await qrAssignor(validTime, 4, hostel);
   }
