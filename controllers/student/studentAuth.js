@@ -35,7 +35,7 @@ const studentRegister = asyncHandler( async(req, res)=>{
             hostelNumber,
       }) ;
       if(newStudent && newQRholder){
-            res.status(200).json({_id: newStudent.id, email: newStudent.email}) ;
+            res.status(200).json({_id: newStudent.id, email: newStudent.email, name: newStudent.name, admin:false}) ;
       }
       else{
             res.status(401) ;
@@ -63,7 +63,7 @@ const studentLogin = asyncHandler( async(req, res) =>{
             process.env.SECRET_ACCESS_TOKEN,
             {expiresIn:"1m"}
             ) ;
-            res.status(200).json({accessToken}) ;
+            res.status(200).json({token: accessToken, email: email, name: student.name, admin:false}) ;
       }
       else{
             res.status(401) ;

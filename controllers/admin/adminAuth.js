@@ -28,7 +28,7 @@ const adminRegister = asyncHandler( async(req, res)=>{
             number,
       }) ;
       if(newAdmin){
-            res.status(200).json({_id: newAdmin.id, email: newAdmin.email}) ;
+            res.status(200).json({_id: newAdmin.id, email: newAdmin.email, name:newAdmin.name, admin:true}) ;
       }
       else{
             res.status(401) ;
@@ -56,7 +56,7 @@ const adminLogin = asyncHandler( async(req, res) =>{
             process.env.SECRET_ACCESS_TOKEN,
             {expiresIn:"1m"}
             ) ;
-            res.status(200).json({accessToken}) ;
+            res.status(200).json({token: accessToken, email: email, name: admin.name, admin:true}) ;
       }
       else{
             res.status(401) ;
