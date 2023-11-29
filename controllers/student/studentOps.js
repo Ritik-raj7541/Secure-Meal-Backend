@@ -37,7 +37,8 @@ const getQR = asyncHandler(async (req, res) => {
     };
     res.status(200).json(result);
   } else {
-    res.status(200).json({ message: "not generated" });
+    res.status(401);
+    throw new Error("Qr Not present");
   }
 });
 
@@ -45,9 +46,14 @@ const getQR = asyncHandler(async (req, res) => {
 // GET - api/operation/student/get-meal-timetable/:email
 const getMenu = asyncHandler(async (req, res) => {
   const email = req.params.email;
+  const hn = email.substring(0,2) ;
+  hn = Number(hn) ;
+  let hostelNumber = 0;
   const student = await Student.findOne({ email });
-  if (student) {
-    const hostelNumber = student.hostelNumber;
+  if (student) hostelNumber = student.hostelNumber;
+  if (1<=hn && hn <= 13) {
+    hostelNumber = hn;
+  }
     const timetable = await meal.findOne({ hostelNumber: hostelNumber });
     if (timetable) {
       res.status(200).json(timetable.routine);
@@ -56,9 +62,8 @@ const getMenu = asyncHandler(async (req, res) => {
         .status(404)
         .json({ message: "time table is not present or not generated" });
     }
-  } else {
     res.status(401);
     throw new Error("User is not valid");
-  }
+  
 });
 module.exports = { check, getQR, getMenu };
