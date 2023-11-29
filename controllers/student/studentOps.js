@@ -46,8 +46,8 @@ const getQR = asyncHandler(async (req, res) => {
 // GET - api/operation/student/get-meal-timetable/:email
 const getMenu = asyncHandler(async (req, res) => {
   const email = req.params.email;
-  const hn = email.substring(0,2) ;
-  hn = Number(hn) ;
+  const hstn = email.substring(0,2) ;
+  const hn = Number(hstn) ;
   let hostelNumber = 0;
   const student = await Student.findOne({ email });
   if (student) hostelNumber = student.hostelNumber;
