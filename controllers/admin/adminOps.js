@@ -6,6 +6,7 @@ const { setSomeValue } = require("../../config/globalVariables");
 const meal = require("../../models/meal");
 const Student = require("../../models/student");
 const Admin = require('../../models/admin') ;
+const Review = require('../../models/review') ;
 
 const { verifyTokens, updateQR } = require("../../middleWare/verifyToken");
 
@@ -202,5 +203,17 @@ const getMenu = asyncHandler(async (req, res) => {
     throw new Error("User is not valid");
   
 });
+
+//4. get review
+// GET - api/operation/admin/get-review
+
+const getReview = asyncHandler( async(req, res) => {
+  const review = await Review.find({}) ;
+  if(review) res.status(200).json({message: "review send"}) ;
+  else{
+    res.status(401) ;
+    throw new Error("Not found") ;
+  }
+}) ;
 
 module.exports = { adminSetqr, adminCheckqr, updateMenu, getMenu };

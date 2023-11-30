@@ -6,6 +6,7 @@ const { getSomeValue } = require("../../config/globalVariables");
 const QRCs = require("../../models/qrCodes");
 const meal = require("../../models/meal");
 const Student = require("../../models/student");
+const Review = require('../../models/review') ;
 
 //0. check port
 // GET - api/operation/student/get-details
@@ -63,4 +64,24 @@ const getMenu = asyncHandler(async (req, res) => {
     throw new Error("User is not valid");
   
 });
-module.exports = { check, getQR, getMenu };
+
+//3. write review
+// POST- api/operation/student/write-review/:email
+const postReview = asyncHandler( async(req, res)=>{
+  const {meal, date, review, rating} = req.body ;
+  const newReview = {
+    meal,
+    date, 
+    review,
+    rating,
+  } ;
+  const updatedReview = await Review.create(newReview) ;
+  if(updatedReview){
+    res.status(200).json({message:"updated done"}) ;
+  }else{
+    res.status(404) ;
+    throw new Error("Not updated") ;
+  }
+}) ;
+
+module.exports = { check, getQR, getMenu, postReview };
