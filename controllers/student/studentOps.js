@@ -51,9 +51,6 @@ const getMenu = asyncHandler(async (req, res) => {
   let hostelNumber = 0;
   const student = await Student.findOne({ email });
   if (student) hostelNumber = student.hostelNumber;
-  if (1<=hn && hn <= 13) {
-    hostelNumber = hn;
-  }
     const timetable = await meal.findOne({ hostelNumber: hostelNumber });
     if (timetable) {
       res.status(200).json(timetable.routine);
@@ -62,7 +59,7 @@ const getMenu = asyncHandler(async (req, res) => {
         .status(404)
         .json({ message: "time table is not present or not generated" });
     }
-    res.status(401);
+    res.status(404);
     throw new Error("User is not valid");
   
 });

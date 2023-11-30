@@ -5,6 +5,7 @@ const { setSomeValue } = require("../../config/globalVariables");
 
 const meal = require("../../models/meal");
 const Student = require("../../models/student");
+const Admin = require('../../models/admin') ;
 
 const { verifyTokens, updateQR } = require("../../middleWare/verifyToken");
 
@@ -163,7 +164,9 @@ const updateMenu = asyncHandler(async (req, res) => {
       res.status(401);
       throw new Error("some internal error");
     }
+    console.log("present");
   } else {
+    console.log("not present");
     const hostel = Number(email.substring(0, 2));
     const newMeal = await meal.create({
       email,
@@ -179,4 +182,25 @@ const updateMenu = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { adminSetqr, adminCheckqr, updateMenu };
+//3. get menu
+// GET - api/operation/admin/get-meal-timetable/:email
+const getMenu = asyncHandler(async (req, res) => {
+  const email = req.params.email;
+  let hostelNumber = 0;
+  const admin = await Admin.findOne({ email });
+  // console.log(admin);
+  if (admin) hostelNumber = admin.hostelNumber;
+    const timetable = await meal.findOne({email: email });
+    if (timetable) {
+      res.status(200).json(timetable.routine);
+    } else {
+      res
+        .status(404)
+        .json({ message: "time table is not present or not generated" });
+    }
+    res.status(404);
+    throw new Error("User is not valid");
+  
+});
+
+module.exports = { adminSetqr, adminCheckqr, updateMenu, getMenu };
