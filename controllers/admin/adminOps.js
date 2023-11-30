@@ -5,8 +5,8 @@ const { setSomeValue } = require("../../config/globalVariables");
 
 const meal = require("../../models/meal");
 const Student = require("../../models/student");
-const Admin = require('../../models/admin') ;
-const Review = require('../../models/review') ;
+const Admin = require("../../models/admin");
+const Review = require("../../models/review");
 
 const { verifyTokens, updateQR } = require("../../middleWare/verifyToken");
 
@@ -87,7 +87,8 @@ const adminCheckqr = asyncHandler(async (req, res) => {
 
   const student = await Student.findOne({ email });
   if (!student) {
-    res.status(201).json({message: "Not a valid qrcode"})
+    res.status(401);
+    throw new Error("Not a valid user");
   }
   if (mealNumber === 1) {
     const result = await verifyTokens(validTime, date);
@@ -97,10 +98,12 @@ const adminCheckqr = asyncHandler(async (req, res) => {
       if (updation) {
         res.status(200).json({ message: "correct user" });
       } else {
-        res.status(201).json({message: "Not a valid qrcode"})
+        res.status(401);
+        throw new Error("Not a valid user");
       }
     } else {
-      res.status(201).json({message: "Not a valid qrcode"})
+      res.status(401);
+      throw new Error("Not a valid user");
     }
   } else if (mealNumber === 2) {
     const result = await verifyTokens(validTime, date);
@@ -110,12 +113,14 @@ const adminCheckqr = asyncHandler(async (req, res) => {
         res.status(200).json({ message: "correct user" });
       } else {
         // console.log("rigiktktk");
-        res.status(201).json({message: "Not a valid qrcode"})
+        res.status(401);
+        throw new Error("Not a valid user");
       }
     } else {
       // res.status(401);
       // throw new Error("Not a valid qr code!!");
-      res.status(201).json({message: "Not a valid qrcode"})
+      res.status(401);
+      throw new Error("Not a valid user");
     }
   } else if (mealNumber === 3) {
     const result = await verifyTokens(validTime, date);
@@ -124,10 +129,12 @@ const adminCheckqr = asyncHandler(async (req, res) => {
       if (updation) {
         res.status(200).json({ message: "correct user" });
       } else {
-        res.status(201).json({message: "Not a valid qrcode"})
+        res.status(401);
+        throw new Error("Not a valid user");
       }
     } else {
-      res.status(201).json({message: "Not a valid qrcode"})
+      res.status(401);
+      throw new Error("Not a valid user");
     }
   } else if (mealNumber === 4) {
     const result = await verifyTokens(validTime, date);
@@ -136,10 +143,12 @@ const adminCheckqr = asyncHandler(async (req, res) => {
       if (updation) {
         res.status(200).json({ message: "correct user" });
       } else {
-        res.status(201).json({message: "Not a valid qrcode"})
+        res.status(401);
+        throw new Error("Not a valid user");
       }
     } else {
-      res.status(201).json({message: "Not a valid qrcode"})
+      res.status(401);
+      throw new Error("Not a valid user");
     }
   } else {
     // console.log("bading");
@@ -191,29 +200,28 @@ const getMenu = asyncHandler(async (req, res) => {
   const admin = await Admin.findOne({ email });
   // console.log(admin);
   if (admin) hostelNumber = admin.hostelNumber;
-    const timetable = await meal.findOne({email: email });
-    if (timetable) {
-      res.status(200).json(timetable.routine);
-    } else {
-      res
-        .status(404)
-        .json({ message: "time table is not present or not generated" });
-    }
-    res.status(404);
-    throw new Error("User is not valid");
-  
+  const timetable = await meal.findOne({ email: email });
+  if (timetable) {
+    res.status(200).json(timetable.routine);
+  } else {
+    res
+      .status(404)
+      .json({ message: "time table is not present or not generated" });
+  }
+  res.status(404);
+  throw new Error("User is not valid");
 });
 
 //4. get review
 // GET - api/operation/admin/get-review
 
-const getReview = asyncHandler( async(req, res) => {
-  const review = await Review.find({}) ;
-  if(review) res.status(200).json({message: "review send"}) ;
-  else{
-    res.status(401) ;
-    throw new Error("Not found") ;
+const getReview = asyncHandler(async (req, res) => {
+  const review = await Review.find({});
+  if (review) res.status(200).json({ message: "review send" });
+  else {
+    res.status(401);
+    throw new Error("Not found");
   }
-}) ;
+});
 
 module.exports = { adminSetqr, adminCheckqr, updateMenu, getMenu };

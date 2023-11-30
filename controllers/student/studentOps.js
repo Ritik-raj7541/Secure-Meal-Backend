@@ -6,7 +6,7 @@ const { getSomeValue } = require("../../config/globalVariables");
 const QRCs = require("../../models/qrCodes");
 const meal = require("../../models/meal");
 const Student = require("../../models/student");
-const Review = require('../../models/review') ;
+const Review = require("../../models/review");
 
 //0. check port
 // GET - api/operation/student/get-details
@@ -47,41 +47,37 @@ const getQR = asyncHandler(async (req, res) => {
 // GET - api/operation/student/get-meal-timetable/:email
 const getMenu = asyncHandler(async (req, res) => {
   const email = req.params.email;
-  const hstn = email.substring(0,2) ;
-  const hn = Number(hstn) ;
+  const hstn = email.substring(0, 2);
+  const hn = Number(hstn);
   let hostelNumber = 0;
   const student = await Student.findOne({ email });
   if (student) hostelNumber = student.hostelNumber;
-    const timetable = await meal.findOne({ hostelNumber: hostelNumber });
-    if (timetable) {
-      res.status(200).json(timetable.routine);
-    } else {
-      res
-        .status(404)
-        .json({ message: "time table is not present or not generated" });
-    }
+  const timetable = await meal.findOne({ hostelNumber: hostelNumber });
+  if (timetable) {
+    res.status(200).json(timetable.routine);
+  } else {
     res.status(404);
     throw new Error("User is not valid");
-  
+  }
 });
 
 //3. write review
 // POST- api/operation/student/write-review/:email
-const postReview = asyncHandler( async(req, res)=>{
-  const {meal, date, review, rating} = req.body ;
+const postReview = asyncHandler(async (req, res) => {
+  const { meal, date, review, rating } = req.body;
   const newReview = {
     meal,
-    date, 
+    date,
     review,
     rating,
-  } ;
-  const updatedReview = await Review.create(newReview) ;
-  if(updatedReview){
-    res.status(200).json({message:"updated done"}) ;
-  }else{
-    res.status(404) ;
-    throw new Error("Not updated") ;
+  };
+  const updatedReview = await Review.create(newReview);
+  if (updatedReview) {
+    res.status(200).json({ message: "updated done" });
+  } else {
+    res.status(404);
+    throw new Error("Not updated");
   }
-}) ;
+});
 
 module.exports = { check, getQR, getMenu, postReview };
