@@ -9,7 +9,20 @@ const Admin = require("../../models/admin");
 const Review = require("../../models/review");
 
 const { verifyTokens, updateQR } = require("../../middleWare/verifyToken");
+const admin = require("../../models/admin");
 
+
+//0
+// GET - api/operation/student/get-details/:gmail
+const check = asyncHandler(async (req, res) => {
+  const email = req.params.email;
+  const admin = await Admin.findOne({email}) ;
+  if(admin) res.status(200).json(admin) ;
+  else{
+    res.status(401) ;
+    throw new Error("Not a valid user");
+  }
+});
 // 1. POST
 // Desc -> it set qr code for each student of particular hostel
 // Input -> time of all the meal
@@ -224,4 +237,4 @@ const getReview = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { adminSetqr, adminCheckqr, updateMenu, getMenu };
+module.exports = { check, adminSetqr, adminCheckqr, updateMenu, getMenu };

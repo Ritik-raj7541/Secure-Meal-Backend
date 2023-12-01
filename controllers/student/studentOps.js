@@ -9,9 +9,15 @@ const Student = require("../../models/student");
 const Review = require("../../models/review");
 
 //0. check port
-// GET - api/operation/student/get-details
+// GET - api/operation/student/get-details/:gmail
 const check = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "ritik is alright" });
+  const email = req.params.email;
+  const student = await Student.findOne({email}) ;
+  if(student) res.status(200).json(student) ;
+  else{
+    res.status(401) ;
+    throw new Error("Not a valid user");
+  }
 });
 
 // 1. get my qr code
@@ -30,7 +36,7 @@ const getQR = asyncHandler(async (req, res) => {
   const { date, qrCode1, qrCode2, qrCode3, qrCode4 } = user.studentQr[len - 1];
   if (date == dateNow) {
     const result = {
-      date,
+      date,  
       qrCode1,
       qrCode2,
       qrCode3,

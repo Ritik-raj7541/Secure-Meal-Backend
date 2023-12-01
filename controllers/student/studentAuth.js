@@ -35,7 +35,7 @@ const studentRegister = asyncHandler( async(req, res)=>{
             hostelNumber,
       }) ;
       if(newStudent && newQRholder){
-            res.status(200).json({_id: newStudent.id, email: newStudent.email, name: newStudent.name, admin:false}) ;
+            res.status(200).json({_id: newStudent.id, email: newStudent.email, name: newStudent.name,roll: newStudent.roll  , admin:false}) ;
       }
       else{
             res.status(401) ;
