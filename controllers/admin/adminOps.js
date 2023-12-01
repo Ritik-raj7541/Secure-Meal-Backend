@@ -230,11 +230,11 @@ const getMenu = asyncHandler(async (req, res) => {
 
 const getReview = asyncHandler(async (req, res) => {
   const review = await Review.find({});
-  if (review) res.status(200).json({ message: "review send" });
+  if (review) res.status(200).json(review);
   else {
     res.status(401);
     throw new Error("Not found");
   }
 });
 
-module.exports = { check, adminSetqr, adminCheckqr, updateMenu, getMenu };
+module.exports = { check, adminSetqr, adminCheckqr, updateMenu, getMenu, getReview };

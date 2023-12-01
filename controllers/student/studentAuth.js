@@ -63,7 +63,7 @@ const studentLogin = asyncHandler( async(req, res) =>{
             process.env.SECRET_ACCESS_TOKEN,
             {expiresIn:"1m"}
             ) ;
-            res.status(200).json({token: accessToken, email: email, name: student.name, admin:false}) ;
+            res.status(200).json({token: accessToken, email: email, name: student.name,roll:student.roll, admin:false}) ;
       }
       else{
             res.status(401) ;
