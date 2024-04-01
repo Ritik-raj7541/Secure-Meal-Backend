@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt') ;
 // url = /api/auth/student/register
 
 const studentRegister = asyncHandler( async(req, res)=>{
-      console.log("body-> ",req.body);
+      // console.log("body-> ",req.body);
       const {email, password, name, roll, branch, number, hostelNumber} = req.body ;
       if(!email || !password || !name || !roll || !branch || !number || !hostelNumber){
             res.status(400) ;

@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt') ;
 
 const adminRegister = asyncHandler( async(req, res)=>{
       const {email, password, name, instituteId, number} = req.body ;
-      console.log(req.body);
+      // console.log(req.body);
       if(!email || !password || !name || !instituteId || !number){
             res.status(400) ;
             throw new Error("All fields are mandatory!! ") ;
