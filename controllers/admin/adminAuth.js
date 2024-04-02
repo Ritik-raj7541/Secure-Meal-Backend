@@ -47,6 +47,7 @@ const adminLogin = asyncHandler( async(req, res) =>{
             throw new Error("All fields are mandatory!! ") ;
       }
       const admin = await Admin.findOne({email}) ;
+      console.log(admin);
       if(admin && (await bcrypt.compare(password, admin.password))){
             const accessToken = jwt.sign({
                   admin:{
